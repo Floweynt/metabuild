@@ -1,6 +1,6 @@
 clang++                                 \
     -std=c++20                          \
-    -O0                                 \
+    -O3                                 \
     "-I${PWD}/api"                      \
     "-I${PWD}/meta/argparse/include/"   \
     meta/main.cpp                       \
@@ -11,8 +11,9 @@ clang++                                 \
     metabuild                           \
     -ldl                                \
     -lm                                 \
-    -lfmt                               \
-    -D_IS_IMPL_SIDE -fvisibility=hidden \
+    -D_IS_IMPL_SIDE                     \
+    -DFMT_HEADER_ONLY                   \
+    -fvisibility=hidden                 \
     -rdynamic
 
 ./metabuild -V build

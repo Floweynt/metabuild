@@ -213,7 +213,7 @@ namespace metabuild
         auto cc = std::find_if(path.begin(), path.end(),
                                [&compiler](const auto& p) { return std::filesystem::exists(std::filesystem::path(p) / compiler); });
         if (cc == path.end())
-            throw metabuild_error(error_code::COMPILER_NOT_FOUND, "unable to find " + compiler + ", is this compiler installed on your $path?");
+            throw metabuild_error(error_code::COMPILER_NOT_FOUND, "unable to find " + compiler + ", is this compiler installed on your $PATH?");
         std::string version_out;
         (void)command(std::filesystem::path(*cc) / vendor).invoke({"--version"}, version_out);
         return new c(vendor, compiler, get_version(version_out), *cc);

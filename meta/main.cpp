@@ -17,7 +17,7 @@
 using namespace metabuild;
 namespace fs = std::filesystem;
 
-#define VERSION "0.0.0"
+#define VERSION "1.0.0"
 
 [[nodiscard]] static dl::dynamic_library open_build()
 {
@@ -28,7 +28,7 @@ namespace fs = std::filesystem;
 
     if (!fs::exists(out) || fs::last_write_time(in) > fs::last_write_time(out))
     {
-        auto compile_status = system_compiler_cpp().cmd().invoke({"-shared", "-O3", "-o", out, "-fPIC", "-std=c++20", in});
+        auto compile_status = system_compiler_cpp().cmd().invoke({"-shared", "-DFMT_HEADER_ONLY", "-O3", "-o", out, "-fPIC", "-std=c++20", in});
         if (compile_status)
             fatal("unable to compile buildscript");
     }
@@ -37,7 +37,7 @@ namespace fs = std::filesystem;
 
 int prog_main(int argc, char** argv)
 {
-    argparse::ArgumentParser program(argv[0]);
+    argparse::ArgumentParser program(argv[0], VERSION);
 
     program.add_argument("-V", "--verbose")
         .action([&](const auto&) { state_data::get_instance().verbosity++; })
